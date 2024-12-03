@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delphi Certification Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Delphi Certification Quiz 2024</h1>
+    </header>
+    <main>
+        <!-- Navegação -->
+        <nav>
+            <button id="prevQuestion">Previous</button>
+            <button id="nextQuestion">Next</button>
+        </nav>
+        
+        <!-- Container para exibição da questão -->
+        <section id="question-container">
+            <div class="question-header">
+                <h2 id="category"></h2>
+                <p id="question-number"></p>
+            </div>
+            <div class="question-body">
+                <p id="question-text"></p>
+            </div>
+            <div class="example"></div> <!-- Área para exibir exemplos -->
+            <div class="answers"></div>            
+            <div id="feedback"></div>
+        </section>
+    </main>
+    <footer>
+        <button id="submitAnswer">Submit Answer</button>
+    </footer>
+      
+    <script src="script.js"></script>
+</body>
+</html>
