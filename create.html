@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Questionnaire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Create a New Questionnaire</h1>
+    </header>
+    <main>
+        <form id="questionnaireForm">
+            <label for="quizName">Questionnaire Name:</label>
+            <input type="text" id="quizName" name="quizName" required placeholder="Enter questionnaire name">
+            
+            <div id="questionsContainer">
+                <!-- Perguntas dinâmicas serão adicionadas aqui -->
+            </div>
+            
+            <button type="button" id="addQuestion">Add Question</button>
+            <button type="submit">Save Questionnaire</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 QuestionaryOn. All rights reserved.</p>
+    </footer>
+    <script src="create.js"></script>
+</body>
+</html>

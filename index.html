@@ -3,38 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delphi Certification Quiz</title>
+    <title>QuestionaryOn - Welcome</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Delphi Certification Quiz 2024</h1>
+        <h1>Welcome to QuestionaryOn</h1>
+        <p>Create, Share, and Respond to Quizzes Effortlessly!</p>
     </header>
     <main>
-        <!-- Navegação -->
+        <form id="loginForm">
+            <label for="email">Enter your email to get started:</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+            <button type="submit">Start</button>
+        </form>
         <nav>
-            <button id="prevQuestion">Previous</button>
-            <button id="nextQuestion">Next</button>
+            <button onclick="window.location.href='question.html?role=creator'">Create a Quiz</button>
+            <button onclick="window.location.href='question.html?role=respondent'">Take a Quiz</button>
         </nav>
-        
-        <!-- Container para exibição da questão -->
-        <section id="question-container">
-            <div class="question-header">
-                <h2 id="category"></h2>
-                <p id="question-number"></p>
-            </div>
-            <div class="question-body">
-                <p id="question-text"></p>
-            </div>
-            <div class="example"></div> <!-- Área para exibir exemplos -->
-            <div class="answers"></div>            
-            <div id="feedback"></div>
-        </section>
     </main>
     <footer>
-        <button id="submitAnswer">Submit Answer</button>
+        <p>&copy; 2024 QuestionaryOn. All rights reserved.</p>
     </footer>
-      
-    <script src="script.js"></script>
+    <script>
+        // Simples redirecionamento para responder ou criar questionário
+        document.getElementById("loginForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            window.location.href = `question.html?role=respondent&email=${encodeURIComponent(email)}`;
+        });
+    </script>
 </body>
 </html>
