@@ -71,13 +71,13 @@ function showEmailPrompt(quizId) {
             <div class="logo">
             <h3>QuestionaryOn</h3>
             </div>
-            <h3>Enter Your Email to Start</h3>
+            <h3>Digite seu email para começar</h3>
         </header>
         <main>
             <form id="emailForm">
                 <label for="email">Email:</label>
                 <input type="email" id="email" required>
-                <button type="submit">Start Quiz</button>
+                <button type="submit">Começar</button>
             </form>
         </main>
     `;
