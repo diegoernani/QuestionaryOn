@@ -88,6 +88,10 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
 
         console.log("Questionário salvo com sucesso:", createdQuiz);
 
+
+        // Redireciona para a tela de confirmação com o quiz_id
+        window.location.href = `confirmation.html?quiz_id=${questionarioId}`;
+
         // Capturar perguntas, alternativas e exemplos
         const perguntas = [];
         const alternativas = [];

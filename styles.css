@@ -8,14 +8,41 @@ body {
 
 /* Cabeçalho */
 header {
+    display: flex;
+    justify-content: space-between; /* Espaça os itens nos cantos e centro */
+    align-items: center;
     background-color: #0073e6;
     color: #fff;
-    padding: 20px 10px;
+    padding: 0px 20px;
     text-align: center;
 }
 
+#projectName {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: none;
+    flex: 1; /* Ocupa espaço disponível no lado esquerdo */
+    
+}
+
+#userEmail {
+    font-size: 14px;
+    font-weight: 400;
+    text-align: right;
+    flex: 1; /* Ocupa espaço disponível no lado direito */
+}
+
+
+
+.user-info {
+    font-size: 14px;
+    color: #fff;
+}
+
+
 /* Container Principal */
 main {
+    flex: 1; /* Faz o conteúdo crescer para ocupar o espaço disponível */
     max-width: 800px;
     margin: 20px auto;
     background: #fff;
@@ -31,6 +58,50 @@ nav {
     gap: 15px;
     margin-bottom: 20px;
 }
+
+.question-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#quizTitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0073e6;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.navigation-buttons button {
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+    max-width: 150px;
+}
+
+.navigation-buttons button:hover {
+    background-color: #005bb5;
+}
+
+.navigation-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 
 /* Botões */
 button {
@@ -125,3 +196,146 @@ footer {
     margin-bottom: 10px;
     width: calc(100% - 20px);
 }
+/* Compartilhar linke */
+#shareLink {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 16px;
+}
+
+button {
+    margin: 10px 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005bb5;
+}
+
+.answers {
+    display: flex;
+    flex-direction: column; /* Alinha itens verticalmente */
+    gap: 10px; /* Espaçamento entre as alternativas */
+}
+
+.answers input[type="radio"] {
+    margin-right: 10px; /* Espaço entre o botão e o texto */
+}
+
+.answers label {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.answers label:hover {
+    background-color: #f9f9f9;
+    border-color: #0073e6;
+}
+
+.answers input[type="radio"]:checked + label {
+    background-color: #e6f7ff;
+    border-color: #0073e6;
+    color: #0073e6;
+    font-weight: bold;
+}
+
+
+/* Login */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #0073e6;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+}
+
+.login-container input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-container button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #005bb5;
+}
+
+.login-container a {
+    color: #0073e6;
+    text-decoration: none;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+.hidden {
+    display: none;
+}
+
+#feedbackMessage {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+#feedbackMessage.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+#feedbackMessage.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+

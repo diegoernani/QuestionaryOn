@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - QuestionaryOn</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Menu Lateral -->
+        <aside class="sidebar">
+          <h2>QuestionaryOn</h2>
+          <nav>
+              <ul>
+                  <li><a href="#" data-section="dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                  <li><a href="#" data-section="questionarios"><i class="fas fa-list"></i> Questionários</a></li>
+                  <li><a href="#" data-section="configuracoes"><i class="fas fa-cogs"></i> Configurações</a></li>
+                  <li><a href="#" data-section="financeiro"><i class="fas fa-wallet"></i> Financeiro</a></li>
+                  <li><button id="logoutButton"><i class="fas fa-sign-out-alt"></i> Sair</button></li>
+              </ul>
+          </nav>
+      </aside>
+      
+        <!-- Área Principal -->
+        <main class="main-content">
+            <header>
+                <h1 id="sectionTitle">Dashboard</h1>
+                <p id="userEmail"></p>
+            </header>
+            <section id="dashboard" class="content-section">
+                <h2>Bem-vindo!</h2>
+                <p>Selecione uma seção no menu para começar.</p>
+            </section>
+            <section id="questionarios" class="content-section hidden">
+                <h2>Seus Questionários</h2>
+                <button id="createQuestionnaire">Criar Novo Questionário</button>
+                <ul id="quizList"></ul>
+            </section>
+            <section id="configuracoes" class="content-section hidden">
+                <h2>Configurações</h2>
+                <p>Configurações gerais do sistema e dos questionários.</p>
+            </section>
+            <section id="financeiro" class="content-section hidden">
+                <h2>Financeiro</h2>
+                <p>Gerencie seus planos e faturas aqui.</p>
+            </section>
+        </main>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html>

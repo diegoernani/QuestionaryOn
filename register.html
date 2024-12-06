@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar - QuestionaryOn</title>
+    <link rel="stylesheet" href="register.css">
+
+</head>
+<body>
+    <main class="login-container">
+        <h1>QuestionaryOn - Registrar</h1>
+        <form id="registerForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required placeholder="Digite seu nome">
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Digite seu email">
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required placeholder="Digite sua senha">
+
+            <label for="confirmPassword">Confirme a Senha:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirme sua senha">
+            
+            <button type="submit">Registrar</button>
+        </form>
+        <div id="feedbackMessage" class="hidden"></div>
+        <p>Já tem uma conta? <a href="login.html">Faça login</a></p>        
+    </main>
+    <footer>
+        <p>&copy; 2024 QuestionaryOn. Todos os direitos reservados.</p>
+    </footer>
+    <script src="register.js"></script>
+</body>
+</html>

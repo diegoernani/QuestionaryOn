@@ -1,0 +1,192 @@
+/* Configurações Básicas */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Cabeçalho Fixo */
+.fixed-header {
+  position: fixed; /* Mantém fixo no topo */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ocupa toda a largura */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #0073e6;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fixed-header .logo h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu a:hover {
+  background-color: #005bb5;
+}
+
+/* Ajuste de Espaçamento para o Conteúdo */
+main {
+  padding-top: 80px; /* Espaço reservado para o cabeçalho fixo */
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+#lottie-animation {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 20px 0;
+  color: #005bb5;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cta-buttons button {
+  background-color: #0073e6;
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-buttons button:hover {
+  background-color: #005bb5;
+  transform: scale(1.05);
+}
+
+/* Seções Gerais */
+.full-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 10px 0;
+  background-color: #0073e6;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Cabeçalho Fixo */
+.fixed-header {
+  position: fixed; /* Mantém fixo no topo */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ocupa toda a largura */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #0073e6;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logomarca */
+.fixed-header .logo h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Menu */
+.menu {
+  display: flex;
+  gap: 20px;
+  margin-right: 20px; /* Espaçamento adicional da direita */
+}
+
+.menu a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu a:hover {
+  background-color: #005bb5;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .fixed-header {
+      flex-direction: column; /* Exibe logo e menu em colunas */
+      align-items: center;
+  }
+
+  .logo {
+      margin-bottom: 10px; /* Espaço entre logo e menu */
+  }
+
+  .menu {
+      justify-content: center;
+      margin-right: 0; /* Remove margem da direita em telas menores */
+  }
+
+  .menu a {
+      font-size: 0.9rem; /* Ajusta o tamanho da fonte para telas menores */
+      padding: 8px 10px;
+  }
+}
+

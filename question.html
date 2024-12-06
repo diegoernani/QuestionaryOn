@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,18 +8,17 @@
 </head>
 <body>
     <header>
-        <h1>Delphi Certification Quiz 2024</h1>
+        <div id="projectName">QuestionaryOn</div>        
+        <div id="userEmail"></div> <!-- Email do usuário -->
     </header>
     <main>
-        <!-- Navegação -->
-        <nav>
-            <button id="prevQuestion">Previous</button>
-            <button id="nextQuestion">Next</button>
-        </nav>
+        <div id="emailDisplay"></div>
+                
         
         <!-- Container para exibição da questão -->
         <section id="question-container">
             <div class="question-header">
+                <h2 id="quizTitle"></h2> <!-- Nome do questionário será exibido aqui -->
                 <h2 id="category"></h2>
                 <p id="question-number"></p>
             </div>
@@ -35,7 +31,11 @@
         </section>
     </main>
     <footer>
-        <button id="submitAnswer">Submit Answer</button>
+        
+        <button id="prevQuestion">Voltar</button>
+        <button id="skipQuestion">Pular</button>
+        <button id="submitAnswer">Enviar Resposta</button>
+        <button id="nextQuestion">Avançar</button>
     </footer>
       
     <script src="script.js"></script>

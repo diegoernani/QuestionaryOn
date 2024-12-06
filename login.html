@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - QuestionaryOn</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <main class="login-container">
+        <h1>QuestionaryOn - Admin</h1>
+        <form id="loginForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Digite seu email">
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required placeholder="Digite sua senha">
+            
+            <button type="submit">Login</button>
+        </form>
+        <div id="feedbackMessage" class="hidden"></div>
+        <p>Não tem conta? <a href="register.html">Cadastre-se</a></p>
+    </main>
+    <footer>
+        <p>&copy; 2024 QuestionaryOn. Todos os direitos reservados.</p>
+    </footer>
+    <script src="login.js"></script>
+</body>
+</html>
