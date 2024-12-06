@@ -11,22 +11,22 @@ document.getElementById("addQuestion").addEventListener("click", () => {
     const questionBlock = document.createElement("div");
     questionBlock.className = "question-block";
     questionBlock.innerHTML = `
-        <label for="question${questionCount}">Question ${questionCount}:</label>
-        <input type="text" id="question${questionCount}" name="questions[]" required placeholder="Enter your question">
-        <label for="category${questionCount}">Category:</label>
-        <input type="text" id="category${questionCount}" name="categories[]" placeholder="Enter category (optional)">
+        <label for="question${questionCount}">Questão ${questionCount}:</label>
+        <input type="text" id="question${questionCount}" name="questions[]" required placeholder="Escreva sua questão">
+        <label for="category${questionCount}">Categoria:</label>
+        <input type="text" id="category${questionCount}" name="categories[]" placeholder="Escreva uma categoria (optional)">
         
         <div class="alternatives">
-            <label>Alternatives:</label>
+            <label>Alternativas:</label>
             <div id="alternatives${questionCount}">
-                <input type="text" name="alternative${questionCount}[]" required placeholder="Alternative 1">
-                <input type="text" name="alternative${questionCount}[]" required placeholder="Alternative 2">
+                <input type="text" name="alternative${questionCount}[]" required placeholder="Alternativa 1">
+                <input type="text" name="alternative${questionCount}[]" required placeholder="Alternativa 2">
             </div>
-            <button type="button" onclick="addAlternative(${questionCount})">Add Alternative</button>
+            <button type="button" onclick="addAlternative(${questionCount})">Adicionar Alternativa</button>
         </div>
         
-        <label for="example${questionCount}">Example (optional):</label>
-        <textarea id="example${questionCount}" name="examples[]" placeholder="Add example or code here"></textarea>
+        <label for="example${questionCount}">Exemplos (opcional):</label>
+        <textarea id="example${questionCount}" name="examples[]" placeholder="Add exemplos ou código fonte aqui"></textarea>
     `;
 
     questionsContainer.appendChild(questionBlock);
