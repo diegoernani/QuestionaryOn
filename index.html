@@ -24,8 +24,7 @@
         <h1>Bem-vindo ao QuestionaryOn</h1>
         <p>Crie e compartilhe questionários de forma simples e eficiente!</p>
         <div class="cta-buttons">
-            <button onclick="location.href='create.html'">Criar Questionário</button>
-            <button onclick="location.href='question.html'">Responder Questionário</button>
+            <button onclick="location.href='create.html'">Crie seu Questionário</button>
         </div>
     </div>
     <main>
@@ -59,13 +58,16 @@
         <p>&copy; 2024 QuestionaryOn. Todos os direitos reservados.</p>
     </footer>
     <script>
-        // Lottie Animation Loader
-        const animation = lottie.loadAnimation({
-            container: document.getElementById('lottie-animation'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: 'https://assets8.lottiefiles.com/packages/lf20_vz3c4xgr.json'
+        document.getElementById("takeQuiz").addEventListener("click", () => {
+            const userToken = localStorage.getItem("supabase.auth.token");
+
+            if (!userToken) {
+                // Redireciona para a página de login se não estiver logado
+                window.location.href = "login.html";
+            } else {
+                // Redireciona para a página de questionário
+                window.location.href = "question.html";
+            }
         });
     </script>
 </body>

@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuestionaryOn</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="question.css">
 </head>
 <body>
-    <header>
-        <div id="projectName">QuestionaryOn</div>        
-        <div id="userEmail"></div> <!-- Email do usuário -->
+    <header class="fixed-header">
+        <div class="logo">
+            <h1>QuestionaryOn</h1>
+        </div>
+        <div class="user-info" id="userEmail">Logado como: N/A</div>
     </header>
-    <main>
-        <div id="emailDisplay"></div>
-                
+    <main class="container-principal">      
         
         <!-- Container para exibição da questão -->
         <section id="question-container">
@@ -28,16 +28,26 @@
             <div class="example"></div> <!-- Área para exibir exemplos -->
             <div class="answers"></div>            
             <div id="feedback"></div>
+
+            <footer class="botoes-acao">        
+                <button id="prevQuestion">Voltar</button>
+                <button id="skipQuestion">Pular</button>
+                <button id="submitAnswer">Enviar Resposta</button>
+                <button id="nextQuestion">Avançar</button>
+            </footer>
         </section>
-    </main>
-    <footer>
         
-        <button id="prevQuestion">Voltar</button>
-        <button id="skipQuestion">Pular</button>
-        <button id="submitAnswer">Enviar Resposta</button>
-        <button id="nextQuestion">Avançar</button>
-    </footer>
+        <div id="emailPrompt" style="display: none;">
+            <form id="emailForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <button type="submit">Começar</button>
+            </form>
+        </div>
+        <!-- <div id="emailDisplay"></div>                        -->
+    </main>
+    
       
-    <script src="script.js"></script>
+    <script src="questionscript.js"></script>
 </body>
 </html>

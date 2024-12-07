@@ -14,7 +14,7 @@ document.getElementById("addQuestion").addEventListener("click", () => {
         <label for="question${questionCount}">Questão ${questionCount}:</label>
         <input type="text" id="question${questionCount}" name="questions[]" required placeholder="Escreva sua questão">
         <label for="category${questionCount}">Categoria:</label>
-        <input type="text" id="category${questionCount}" name="categories[]" placeholder="Escreva uma categoria (optional)">
+        <input type="text" id="category${questionCount}" name="categories[]" placeholder="Escreva uma categoria (opcional)">
         
         <div class="alternatives">
             <label>Alternativas:</label>
@@ -24,9 +24,11 @@ document.getElementById("addQuestion").addEventListener("click", () => {
             </div>
             <button type="button" onclick="addAlternative(${questionCount})">Adicionar Alternativa</button>
         </div>
-        
-        <label for="example${questionCount}">Exemplos (opcional):</label>
-        <textarea id="example${questionCount}" name="examples[]" placeholder="Add exemplos ou código fonte aqui"></textarea>
+                
+        <div class="material-input-container">
+        <label for="example${questionCount}" class="material-label">Exemplos (opcional):</label>
+        <textarea id="example${questionCount}" name="examples[]" class="material-textarea" placeholder="Add exemplos ou código fonte aqui"></textarea>
+        </div>
     `;
 
     questionsContainer.appendChild(questionBlock);
@@ -39,7 +41,7 @@ function addAlternative(questionId) {
     newAlternative.type = "text";
     newAlternative.name = `alternative${questionId}[]`;
     newAlternative.required = true;
-    newAlternative.placeholder = `Alternative ${alternativesContainer.children.length + 1}`;
+    newAlternative.placeholder = `Alternativa ${alternativesContainer.children.length + 1}`;
     alternativesContainer.appendChild(newAlternative);
 }
 

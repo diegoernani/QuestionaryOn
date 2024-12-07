@@ -1,0 +1,222 @@
+/* Estilo Global */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+#emailPrompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+
+/* Cabeçalho */
+.fixed-header {
+  /* position: fixed; Mantém fixo no topo */
+  top: 0;
+  left: 0;
+  width: auto; /* Ocupa toda a largura */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #0073e6;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fixed-header .logo h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* ocultar botoes-navigation */
+.hidden {
+  display: none;
+}
+
+.botoes-acao {
+  display: none; /* Inicialmente escondido */
+}
+
+/* Container Principal */
+main {
+  padding-top: 0px; 
+}
+
+.container-principal{
+  flex: 1; 
+  max-width: 800px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/*Label Logado como */
+#userEmail {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: end;
+  flex: 1; /* Ocupa espaço disponível no lado direito */
+}
+
+/*Espaço entre as alternativas e o numero da questão */
+.question-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* titulo do formulario de perguntas */
+#quizTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0073e6;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+/* Formulários Container */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+form label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+form input[type="email"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%; /* Garante responsividade */
+  font-size: 1rem;
+  box-sizing: border-box; /* Inclui padding e bordas no tamanho total */
+}
+
+form input[type="email"]:focus {
+  border-color: #0073e6;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 115, 230, 0.5);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Links */
+a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Rodapé */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Questions */
+.question-block {
+  background: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-left: 4px solid #007bff;
+  border-radius: 5px;
+}
+
+.question-block label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.alternatives input {
+  margin-bottom: 10px;
+  width: calc(100% - 20px);
+}
+
+/* Compartilhar linke */
+#shareLink {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 16px;
+}
+
+button {
+  margin: 10px 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #0073e6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+/* Respostas - Checkbox */
+.answers {
+  display: flex;
+  flex-direction: column; /* Alinha itens verticalmente */
+  gap: 10px; /* Espaçamento entre as alternativas */
+}
+
+.answers input[type="radio"] {
+  margin-right: 10px; /* Espaço entre o botão e o texto */
+}
+
+.answers label {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.answers label:hover {
+  background-color: #f9f9f9;
+  border-color: #0073e6;
+}
+
+.answers input[type="radio"]:checked + label {
+  background-color: #e6f7ff;
+  border-color: #0073e6;
+  color: #0073e6;
+  font-weight: bold;
+}
+
+/* Ajuste para dispositivos móveis */
+@media (max-width: 768px) {
+  form input[type="email"] {
+      font-size: 0.9rem; /* Reduz o tamanho da fonte em telas menores */
+      padding: 8px; /* Ajusta o preenchimento */
+  }
+}

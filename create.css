@@ -370,3 +370,117 @@ button:hover {
 .visible {
   display: block;
 }
+
+/* Estilo Material Design para Inputs */
+.material-input {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.material-input:focus {
+  border-color: #0073e6;
+  box-shadow: 0 2px 5px rgba(0, 115, 230, 0.2);
+}
+
+.material-input::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Estilo para o Label */
+/* Label para Campo de Texto Grande */
+.material-label {
+  font-size: 1rem;
+  color: #333;
+  display: block; /* Ocupa toda a largura */
+  margin-bottom: 5px;
+  width: 100%; /* Alinha com o campo de texto */
+  box-sizing: border-box;
+  text-align: left;
+  line-height: 1.5; /* Espaçamento entre linhas */
+  word-wrap: break-word; /* Quebra palavras longas */
+  white-space: pre-wrap; /* Mantém quebras de linha e espaços */
+}
+
+/* Contêiner para Alinhamento Completo */
+.material-input-container {
+  margin-bottom: 20px;
+  position: relative;
+  width: 100%; /* Garante que todo o contêiner ocupe a largura disponível */
+}
+
+/* Campo de Texto Grande - Textarea */
+.material-textarea {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: #fff;
+  resize: vertical; /* Permite redimensionamento vertical */
+  min-height: 6rem; /* Altura inicial */
+  max-height: 15rem; /* Altura máxima */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.material-textarea:focus {
+  border-color: #0073e6;
+  box-shadow: 0 2px 5px rgba(0, 115, 230, 0.2);
+}
+
+.material-textarea::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Feedback visual para erros */
+.material-input-error {
+  color: #f44336;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: block;
+}
+
+
+/* Atualização do formulário existente */
+form label {
+  font-size: 1rem; /* Atualizando para consistência com o Material Design */
+  color: #333; /* Cor ajustada para o estilo */
+}
+
+form input {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus {
+  border-color: #0073e6;
+  box-shadow: 0 2px 5px rgba(0, 115, 230, 0.2);
+}
+
+form input::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar um Questionário</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="create.css">
 </head>
 <body>
     <header>
@@ -15,16 +15,17 @@
     </header>
     <main>
         <form id="questionnaireForm">
-            <label for="quizName">Nome do Questionário:</label>
-            <input type="text" id="quizName" name="quizName" required placeholder="Dê um nome ao questionário">
-            
-            <div id="questionsContainer">
-                <!-- Perguntas dinâmicas serão adicionadas aqui -->
+            <div class="material-input-container">
+              <label for="quizName" class="material-label">Nome do Questionário:</label>
+              <input type="text" id="quizName" name="quizName" class="material-input" required placeholder="Dê um nome ao questionário">
             </div>
-            
+            <div id="questionsContainer">
+              <!-- Perguntas dinâmicas serão adicionadas aqui -->
+            </div>
             <button type="button" id="addQuestion">Adicionar Questões</button>
             <button type="submit">Gravar Questionário</button>
-        </form>
+          </form>
+          
     </main>
     <footer>
         <p>&copy; 2024 QuestionaryOn. All rights reserved.</p>

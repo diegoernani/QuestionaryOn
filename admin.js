@@ -1,6 +1,7 @@
 const user = supabase.auth.getUser();
 
 document.getElementById("userEmail").innerText = `Logado como: ${user.email}`;
+
 document.getElementById("logoutButton").addEventListener("click", async () => {
     await supabase.auth.signOut();
     window.location.href = "login.html";

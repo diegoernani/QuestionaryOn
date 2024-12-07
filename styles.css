@@ -339,3 +339,34 @@ button:hover {
     border: 1px solid #f5c6cb;
 }
 
+#feedbackMessage {
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 15px 20px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+#feedbackMessage.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+#feedbackMessage.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Exibir mensagem */
+.visible {
+    display: block;
+}
