@@ -47,6 +47,7 @@ function addAlternative(questionId) {
 
 // Salvar questionário no Supabase
 
+// Salvar questionário no Supabase
 document.getElementById("questionnaireForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -60,7 +61,6 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
 
     try {
         const userId = 1; // ID fixo do usuário
-
         console.log("Preparando questionário...");
         const questionarioData = { nome: quizName, user_id: userId };
 
@@ -82,17 +82,13 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
         }
 
         const createdQuiz = await responseQuiz.json();
-        const questionarioId = createdQuiz[0]?.id;
+        const questionariouuid = createdQuiz[0]?.uuid;
 
-        if (!questionarioId) {
-            throw new Error("ID do questionário não retornado.");
+        if (!questionariouuid) {
+            throw new Error("UUID do questionário não retornado.");
         }
 
         console.log("Questionário salvo com sucesso:", createdQuiz);
-
-
-        // Redireciona para a tela de confirmação com o quiz_id
-        window.location.href = `confirmation.html?quiz_id=${questionarioId}`;
 
         // Capturar perguntas, alternativas e exemplos
         const perguntas = [];
@@ -102,40 +98,39 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
 
         questionInputs.forEach((questionInput, index) => {
             const texto = questionInput.value;
-            const categoryInput = document.querySelector(`#category${index + 1}`); // Captura o campo categoria
-            const categoria = categoryInput ? categoryInput.value : null; // Garante que o valor exista ou seja nulo
-        
+            const categoryInput = document.querySelector(`#category${index + 1}`);
+            const categoria = categoryInput ? categoryInput.value : null;
+
             if (texto) {
                 const pergunta = {
                     texto,
-                    questionario_id: questionarioId,
-                    categoria, // Adiciona a categoria ao objeto pergunta
+                    questionariouuid: questionariouuid,
+                    categoria,
                 };
                 perguntas.push(pergunta);
-        
+
                 // Capturar alternativas associadas
                 const alternativeInputs = document.querySelectorAll(`input[name="alternative${index + 1}[]"]`);
+                
                 alternativeInputs.forEach((altInput) => {
-                    const alternativa = {
+                    alternativas.push({
                         texto: altInput.value,
-                        questao_id: null, // Será preenchido após salvar as perguntas
-                        correta: false, // Ajuste se necessário
-                    };
-                    alternativas.push(alternativa);
+                        questao_id: null,
+                        // correta: correctAlternative && correctAlternative.value == altIndex,
+                        correta: true,
+                    });
                 });
-        
-                // Capturar exemplo associado
+
+                // Capturar exemplos associados
                 const exampleTextarea = document.querySelector(`#example${index + 1}`);
                 if (exampleTextarea && exampleTextarea.value) {
-                    const exemplo = {
-                        codigo: exampleTextarea.value, // Campo atualizado
-                        questao_id: null, // Será preenchido após salvar as perguntas
-                    };
-                    exemplos.push(exemplo);
+                    exemplos.push({
+                        codigo: exampleTextarea.value,
+                        questao_id: null,
+                    });
                 }
             }
         });
-        
 
         console.log("Perguntas preparadas:", perguntas);
         console.log("Alternativas preparadas:", alternativas);
@@ -165,22 +160,23 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
         const createdQuestions = await responseQuestions.json();
         console.log("Perguntas salvas com sucesso:", createdQuestions);
 
-        // Associar alternativas às perguntas salvas
-        createdQuestions.forEach((question, index) => {
-            alternativas.forEach((alt, altIndex) => {
-                const questionGroupIndex = Math.floor(altIndex / (alternativas.length / createdQuestions.length));
-                if (questionGroupIndex === index) {
-                    alt.questao_id = question.id;
-                }
+        // Associar alternativas e exemplos às perguntas salvas
+        // Associar alternativas e exemplos às perguntas salvas
+        createdQuestions.forEach((pergunta, index) => {
+            const start = index * alternativas.length / createdQuestions.length;
+            const end = (index + 1) * alternativas.length / createdQuestions.length;
+
+            alternativas.slice(start, end).forEach((alt) => {
+                alt.questao_id = pergunta.id;
             });
 
-            // Associar exemplos às perguntas salvas
             exemplos.forEach((ex, exIndex) => {
                 if (exIndex === index) {
-                    ex.questao_id = question.id;
+                    ex.questao_id = pergunta.id;
                 }
             });
         });
+
 
         console.log("Alternativas associadas às perguntas:", alternativas);
         console.log("Exemplos associados às perguntas:", exemplos);
@@ -195,7 +191,11 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
                     "Content-Type": "application/json",
                     Prefer: "return=representation",
                 },
-                body: JSON.stringify(alternativas),
+                body: JSON.stringify(alternativas.map((alt) => ({
+                    texto: alt.texto,
+                    questao_id: alt.questao_id,
+                    correta: alt.correta,
+                }))),
             });
 
             if (!responseAlternatives.ok) {
@@ -216,7 +216,10 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
                     "Content-Type": "application/json",
                     Prefer: "return=representation",
                 },
-                body: JSON.stringify(exemplos),
+                body: JSON.stringify(exemplos.map((ex) => ({
+                    codigo: ex.codigo,
+                    questao_id: ex.questao_id,
+                }))),
             });
 
             if (!responseExamples.ok) {
@@ -227,8 +230,10 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
             console.log("Exemplos salvos com sucesso!");
         }
 
-        alert("Questionário, perguntas, alternativas e exemplos salvos com sucesso!");
-        window.location.reload();
+        alert("Questionário salvo com sucesso!");
+
+        // Redirecionar para confirmation.html com o UUID do questionário
+        window.location.href = `confirmation.html?uuid=${questionariouuid}`;
     } catch (error) {
         console.error("Erro ao salvar dados:", error);
         alert("Erro ao salvar dados. Consulte o console para mais detalhes.");

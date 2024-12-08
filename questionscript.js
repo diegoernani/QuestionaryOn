@@ -6,69 +6,71 @@ const API_QUESTIONARIOS_URL = `${SUPABASE_URL}/rest/v1/questionarios`;
 const API_QUESTOES_URL = `${SUPABASE_URL}/rest/v1/questoes`;
 const API_ALTERNATIVAS_URL = `${SUPABASE_URL}/rest/v1/alternativas`;
 const API_EXEMPLOS_URL = `${SUPABASE_URL}/rest/v1/exemplos`;
-const API_RESPONSES_URL = `${SUPABASE_URL}/rest/v1/questions_response`;
+const API_RESPONSTAS_URL = `${SUPABASE_URL}/rest/v1/respostas`;
+
 
 let questions = [];
 let currentQuestionIndex = 0;
+let userEmail = "";
 
 // Função Principal
 async function init() {
     const urlParams = new URLSearchParams(window.location.search);
-    const quizId = urlParams.get("quiz_id");
-    const email = urlParams.get("email");
+    const questionariouuid = urlParams.get("uuid");
+    userEmail = urlParams.get("email");
 
-    // Sempre iniciar na função showEmailPrompt
-    if (!quizId) {
-        alert("Questionário não encontrado.");
-        window.location.href = "index.html";
+    if (!questionariouuid || !userEmail) {
+        // alert("Dados insuficientes para carregar o questionário.");
+        window.location.href = "emailprompt.html?uuid=" + questionariouuid;
         return;
     }
 
-    if (!email) {
-        alert("Por favor, informe seu email antes de acessar o questionário.");
-        window.location.href = `emailPrompt.html?quiz_id=${quizId}`;
-        return;
-    }
-
-    // Exibir email no cabeçalho
+    // Exibir o email no cabeçalho
     const userEmailElement = document.getElementById("userEmail");
     if (userEmailElement) {
-        userEmailElement.innerText = `Logado como: ${email}`;
+        userEmailElement.textContent = `Logado como: ${userEmail}`;
     }
 
     // Carregar nome do questionário
     try {
-        const response = await fetch(`${API_QUESTIONARIOS_URL}?id=eq.${quizId}`, {
+        const response = await fetch(`${API_QUESTIONARIOS_URL}?uuid=eq.${questionariouuid}`, {
             headers: {
                 Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
                 apikey: SUPABASE_ANON_KEY,
             },
         });
-        const data = await response.json();
 
+        const data = await response.json();
         if (data.length > 0) {
             const quizTitleElement = document.getElementById("quizTitle");
             if (quizTitleElement) {
                 quizTitleElement.innerText = data[0].nome;
             }
+
+            // Exibir modal de email
+            await fetchQuestions(questionariouuid);
         } else {
             throw new Error("Questionário não encontrado.");
         }
-    } catch (error) {
-        console.error("Erro ao carregar nome do questionário:", error);
-        window.location.href = "404.html";
-        return;
-    }
+        // Configuração dos botões após carregar as perguntas
+        configureButtons();
 
-    // Carregar perguntas
-    await fetchQuestions(quizId);
+    } catch (error) {
+        console.error("Erro ao carregar questionário:", error);
+        alert("Erro ao carregar questionário. Verifique o console para mais detalhes.");
+        window.location.href = "404.html";
+    }
 }
 
-// Mostra a página de solicitação de e-mail
+// Validar email
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
-// Busca questões, alternativas e exemplos
-async function fetchQuestions(quizId) {
-    console.log("Iniciando fetchQuestions com Quiz ID:", quizId);
+// Buscar questões, alternativas e exemplos
+async function fetchQuestions(questionariouuid) {
+    console.log("Iniciando fetchQuestions com UUID do Questionário:", questionariouuid);
 
     try {
         const headers = {
@@ -77,8 +79,8 @@ async function fetchQuestions(quizId) {
             "Content-Type": "application/json",
         };
 
-        // Buscando todas as questões relacionadas ao questionário
-        const questoesRes = await fetch(`${API_QUESTOES_URL}?questionario_id=eq.${quizId}`, { headers });
+        // Buscar todas as questões relacionadas ao questionário pelo UUID
+        const questoesRes = await fetch(`${API_QUESTOES_URL}?questionariouuid=eq.${questionariouuid}`, { headers });
 
         if (!questoesRes.ok) {
             const errorMsg = await questoesRes.text();
@@ -89,31 +91,22 @@ async function fetchQuestions(quizId) {
         const questoes = await questoesRes.json();
         console.log("Questões retornadas:", questoes);
 
-        // Preparar promessas para buscar alternativas e exemplos de cada questão
-        const alternativasPromises = questoes.map((questao) =>
-            fetch(`${API_ALTERNATIVAS_URL}?questao_id=eq.${questao.id}`, { headers }).then((res) =>
-                res.ok ? res.json() : []
-            )
-        );
+        // Iterar sobre as questões para buscar alternativas e exemplos
+        for (const questao of questoes) {
+            const alternativasRes = await fetch(`${API_ALTERNATIVAS_URL}?questao_id=eq.${questao.id}`, { headers });
+            const alternativas = alternativasRes.ok ? await alternativasRes.json() : [];
 
-        const exemplosPromises = questoes.map((questao) =>
-            fetch(`${API_EXEMPLOS_URL}?questao_id=eq.${questao.id}`, { headers }).then((res) =>
-                res.ok ? res.json() : []
-            )
-        );
+            const exemplosRes = await fetch(`${API_EXEMPLOS_URL}?questao_id=eq.${questao.id}`, { headers });
+            const exemplos = exemplosRes.ok ? await exemplosRes.json() : [];
 
-        // Resolve todas as promessas
-        const alternativasList = await Promise.all(alternativasPromises);
-        const exemplosList = await Promise.all(exemplosPromises);
+            questions.push({
+                ...questao,
+                alternativas: alternativas,
+                exemplos: exemplos,
+            });
+        }
 
-        // Combina as questões com alternativas e exemplos
-        questions = questoes.map((questao, index) => ({
-            ...questao,
-            alternativas: alternativasList[index],
-            exemplos: exemplosList[index],
-        }));
-
-        console.log("Questões completas:", questions);
+        console.log("Questões completas com alternativas e exemplos:", questions);
 
         if (questions.length > 0) {
             loadQuestion(currentQuestionIndex);
@@ -125,6 +118,8 @@ async function fetchQuestions(quizId) {
     }
 }
 
+
+// Carregar uma questão
 function loadQuestion(index) {
     if (questions.length === 0) {
         console.error("Nenhuma questão carregada.");
@@ -133,14 +128,12 @@ function loadQuestion(index) {
 
     const question = questions[index];
 
-    // Atualizar categoria e número da questão
     document.getElementById("category").innerText = `${question.categoria}`;
     document.getElementById("question-number").innerText = `Questão ${index + 1} de ${questions.length}`;
     document.getElementById("question-text").innerText = question.texto;
 
-    // Atualizar exemplos
     const exampleElem = document.querySelector(".example");
-    exampleElem.innerHTML = ""; // Limpa exemplos anteriores
+    exampleElem.innerHTML = "";
     if (question.exemplos && question.exemplos.length > 0) {
         exampleElem.style.display = "block";
 
@@ -158,9 +151,8 @@ function loadQuestion(index) {
         exampleElem.style.display = "none";
     }
 
-    // Atualizar alternativas
     const answersElem = document.querySelector(".answers");
-    answersElem.innerHTML = ""; // Limpa as alternativas anteriores
+    answersElem.innerHTML = "";
 
     if (question.alternativas && question.alternativas.length > 0) {
         question.alternativas.forEach((option) => {
@@ -174,87 +166,87 @@ function loadQuestion(index) {
         answersElem.appendChild(noAlternatives);
     }
 
-    // Limpa o feedback
     document.getElementById("feedback").innerText = "";
 }
 
-// Navegação entre questões
-document.getElementById("nextQuestion")?.addEventListener("click", () => {
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion(currentQuestionIndex);
-    }
-});
+function configureButtons() {
+    document.getElementById("prevQuestion").addEventListener("click", () => {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion(currentQuestionIndex);
+        }
+    });
 
-document.getElementById("prevQuestion")?.addEventListener("click", () => {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        loadQuestion(currentQuestionIndex);
-    }
-});
+    document.getElementById("nextQuestion").addEventListener("click", () => {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion(currentQuestionIndex);
+        }
+    });
 
-// Função para pular a questão
-document.getElementById("skipQuestion").addEventListener("click", () => {
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion(currentQuestionIndex);
-    } else {
-        alert("Você chegou ao final do questionário!");
-    }
-});
+    document.getElementById("submitAnswer").addEventListener("click", submitAnswer);
 
-// Submeter resposta
+    document.getElementById("skipQuestion").addEventListener("click", () => {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion(currentQuestionIndex);
+        } else {
+            alert("Você já está na última pergunta.");
+        }
+    });
+}
+
+
 async function submitAnswer() {
     const selectedOption = document.querySelector('input[name="answer"]:checked');
-    const email = new URLSearchParams(window.location.search).get("email");
-    const quizId = new URLSearchParams(window.location.search).get("quiz_id");
 
     if (!selectedOption) {
         alert("Por favor, selecione uma resposta antes de enviar.");
         return;
     }
 
-    if (!email || !quizId) {
-        alert("Erro: Email ou ID do questionário ausente.");
-        return;
-    }
+    const answerId = selectedOption.value;
+    const currentQuestion = questions[currentQuestionIndex];
 
-    const resposta = {
-        questionario_id: quizId,
-        questao_id: questions[currentQuestionIndex].id,
-        email: email,
-        resposta: selectedOption.value,
+    const answerData = {
+        questao_id: currentQuestion.id,
+        alternativa_id: answerId,
+        resposta: 'true',
+        email: userEmail, // Variável global corrigida
+        questionariouuid: currentQuestion.questionariouuid,
     };
 
+    console.log("Enviando resposta:", answerData);
+
     try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/respostas`, {
+        const response = await fetch(`${API_RESPONSTAS_URL}`, {
             method: "POST",
             headers: {
+                Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                apikey: SUPABASE_ANON_KEY,
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-                "apikey": SUPABASE_ANON_KEY,
             },
-            body: JSON.stringify(resposta),
+            body: JSON.stringify(answerData),
         });
 
         if (!response.ok) {
-            throw new Error(`Erro ao salvar resposta: ${response.statusText}`);
+            const errorDetails = await response.text();
+            throw new Error(`Erro ao enviar resposta: ${errorDetails}`);
         }
 
+        console.log("Resposta enviada com sucesso!");
         alert("Resposta enviada com sucesso!");
 
-        // Carregar próxima questão, se houver
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
             loadQuestion(currentQuestionIndex);
         } else {
-            alert("Você respondeu todas as perguntas. Obrigado!");
-            // Redirecionar ou mostrar tela de conclusão
-            window.location.href = `confirmation.html?quiz_id=${quizId}`;
+            alert("Você concluiu o questionário! Obrigado por participar.");
+            window.location.href = "index.html"; // Redirecionar para página inicial ou outra página válida
         }
     } catch (error) {
-        console.error("Erro ao salvar resposta:", error);
-        alert("Ocorreu um erro ao enviar a resposta. Tente novamente.");
+        console.error("Erro ao enviar resposta:", error);
+        alert("Erro ao enviar a resposta. Consulte o console para mais detalhes.");
     }
 }
 

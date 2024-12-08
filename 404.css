@@ -49,13 +49,6 @@ body {
   line-height: 1.8; /* Melhor espaçamento entre linhas */
 }
 
-/* Contêiner da Animação */
-/* .lottie-animation {
-  width: 300px;
-  height: 300px;
-  margin-bottom: 20px;
-} */
-
 /* Estilo do Link */
 a {
   display: inline-block;
@@ -72,3 +65,15 @@ a:hover {
   background-color: #005bb5;
 }
 
+/* Contêiner para a Imagem SVG */
+.svg-container {
+  width: 300px; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção */
+  margin: 20px auto; /* Centraliza a imagem */
+}
+
+.svg-container img {
+  width: 100%; /* Faz a imagem ocupar toda a largura do contêiner */
+  height: auto; /* Mantém a proporção */
+  display: block; /* Remove espaços indesejados ao redor da imagem */
+}

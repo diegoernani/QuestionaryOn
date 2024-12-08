@@ -43,7 +43,9 @@ body {
 }
 
 .botoes-acao {
-  display: none; /* Inicialmente escondido */
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 /* Container Principal */
@@ -220,3 +222,4 @@ button:hover {
       padding: 8px; /* Ajusta o preenchimento */
   }
 }
+
