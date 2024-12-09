@@ -181,20 +181,29 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
         console.log("Perguntas salvas com sucesso:", createdQuestions);
 
         // Associar alternativas e exemplos às perguntas salvas
-        createdQuestions.forEach((pergunta, index) => {
-            const start = index * alternativas.length / createdQuestions.length;
-            const end = (index + 1) * alternativas.length / createdQuestions.length;
+        // Associar alternativas e exemplos às perguntas salvas
+        let alternativaIndex = 0; // Índice global para controlar as alternativas
 
-            alternativas.slice(start, end).forEach((alt) => {
-                alt.questao_id = pergunta.id;
+        createdQuestions.forEach((pergunta, index) => {
+            // Associa todas as alternativas pertencentes à pergunta atual
+            const alternativesForQuestion = alternativas.filter((_, altIndex) => {
+                const questionNumber = Math.floor(altIndex / (alternativas.length / createdQuestions.length));
+                return questionNumber === index;
             });
 
+            alternativesForQuestion.forEach((alt) => {
+                alt.questao_id = pergunta.id;
+                alternativaIndex++;
+            });
+
+            // Associa o exemplo pertencente à pergunta atual
             exemplos.forEach((ex, exIndex) => {
                 if (exIndex === index) {
                     ex.questao_id = pergunta.id;
                 }
             });
         });
+
 
         console.log("Alternativas associadas às perguntas:", alternativas);
         console.log("Exemplos associados às perguntas:", exemplos);
