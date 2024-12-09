@@ -57,7 +57,7 @@ async function init() {
 
     } catch (error) {
         console.error("Erro ao carregar questionário:", error);
-        alert("Erro ao carregar questionário. Verifique o console para mais detalhes.");
+        await showAlert("Erro", "Erro ao carregar questionário. Verifique o console para mais detalhes.");
         window.location.href = "404.html";
     }
 }
@@ -111,7 +111,7 @@ async function fetchQuestions(questionariouuid) {
         if (questions.length > 0) {
             loadQuestion(currentQuestionIndex);
         } else {
-            alert("Nenhuma questão encontrada para este questionário.");
+            showAlert("Aviso","Nenhuma questão encontrada para este questionário.");
         }
     } catch (error) {
         console.error("Erro ao carregar questões:", error);
@@ -191,7 +191,7 @@ function configureButtons() {
             currentQuestionIndex++;
             loadQuestion(currentQuestionIndex);
         } else {
-            alert("Você já está na última pergunta.");
+            showAlert("Aviso","Você já está na última pergunta.");
         }
     });
 }
@@ -201,7 +201,7 @@ async function submitAnswer() {
     const selectedOption = document.querySelector('input[name="answer"]:checked');
 
     if (!selectedOption) {
-        alert("Por favor, selecione uma resposta antes de enviar.");
+        await showAlert("Aviso", "Por favor, selecione uma resposta antes de enviar.");
         return;
     }
 
@@ -233,21 +233,49 @@ async function submitAnswer() {
             const errorDetails = await response.text();
             throw new Error(`Erro ao enviar resposta: ${errorDetails}`);
         }
-
-        console.log("Resposta enviada com sucesso!");
-        alert("Resposta enviada com sucesso!");
+        
+        await showAlert("Parabéns", "Resposta enviada com sucesso!");
 
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
             loadQuestion(currentQuestionIndex);
         } else {
-            alert("Você concluiu o questionário! Obrigado por participar.");
+            await showAlert("Parabéns", "Você concluiu o questionário! Obrigado por participar.");
             window.location.href = "index.html"; // Redirecionar para página inicial ou outra página válida
         }
     } catch (error) {
         console.error("Erro ao enviar resposta:", error);
-        alert("Erro ao enviar a resposta. Consulte o console para mais detalhes.");
+        await showAlert("Erro", "Erro ao enviar a resposta. Consulte o console para mais detalhes.");
     }
+}
+
+function showAlert(title, message) {
+    return new Promise((resolve) => {
+        const alertModal = document.getElementById("alertModal");
+        const alertTitle = document.getElementById("alertTitle");
+        const alertMessage = document.getElementById("alertMessage");
+        const alertOkButton = document.getElementById("alertOkButton");
+        const closeAlertModal = document.getElementById("closeAlertModal");
+
+        alertTitle.textContent = title;
+        alertMessage.textContent = message;
+
+        alertModal.style.display = "block";
+
+        const closeModal = () => {
+            alertModal.style.display = "none";
+            resolve(); // Resolve a Promise quando o modal é fechado
+        };
+
+        alertOkButton.onclick = closeModal;
+        closeAlertModal.onclick = closeModal;
+
+        window.onclick = (event) => {
+            if (event.target === alertModal) {
+                closeModal();
+            }
+        };
+    });
 }
 
 // Inicializar

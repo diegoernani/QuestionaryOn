@@ -1,4 +1,4 @@
-document.getElementById("emailForm").addEventListener("submit", (event) => {
+document.getElementById("emailForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -6,7 +6,7 @@ document.getElementById("emailForm").addEventListener("submit", (event) => {
   const email = document.getElementById("email").value;
 
   if (!questionariouuid) {
-      alert("Questionário não encontrado.");
+      await showAlert("Erro","Questionário não encontrado.");
       window.location.href = "index.html";
       return;
   }

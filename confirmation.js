@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const questionariouuid = urlParams.get("uuid"); // Usar UUID em vez de quiz_id
 
     if (!questionariouuid) {
-        alert("Questionário não encontrado. Redirecionando para a página inicial.");
+        await showAlert("Erro","Questionário não encontrado. Redirecionando para a página inicial.");
         window.location.href = "index.html";
         return;
     }
@@ -47,6 +47,35 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("copyLink").addEventListener("click", () => {
         shareLinkInput.select();
         document.execCommand("copy");
-        alert("Link copiado para a área de transferência!");
+        showAlert("Sucesso", "Link copiado para a área de transferência!");
     });
 });
+
+function showAlert(title, message) {
+    return new Promise((resolve) => {
+        const alertModal = document.getElementById("alertModal");
+        const alertTitle = document.getElementById("alertTitle");
+        const alertMessage = document.getElementById("alertMessage");
+        const alertOkButton = document.getElementById("alertOkButton");
+        const closeAlertModal = document.getElementById("closeAlertModal");
+
+        alertTitle.textContent = title;
+        alertMessage.textContent = message;
+
+        alertModal.style.display = "block";
+
+        const closeModal = () => {
+            alertModal.style.display = "none";
+            resolve(); // Resolve a Promise quando o modal é fechado
+        };
+
+        alertOkButton.onclick = closeModal;
+        closeAlertModal.onclick = closeModal;
+
+        window.onclick = (event) => {
+            if (event.target === alertModal) {
+                closeModal();
+            }
+        };
+    });
+};
