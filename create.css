@@ -191,11 +191,39 @@ footer {
   font-weight: bold;
   margin-top: 10px;
 }
-
-.alternatives input {
-  margin-bottom: 10px;
-  width: calc(100% - 20px);
+/* Container para as alternativas */
+.alternatives {
+  display: flex;
+  flex-direction: column; /* Alinha cada alternativa verticalmente */
+  gap: 10px; /* Espaçamento entre as alternativas */
 }
+
+/* Cada alternativa */
+.alternative-row {
+  display: flex;
+  align-items: center; /* Centraliza checkbox e input verticalmente */
+  gap: 10px; /* Espaçamento entre checkbox e input */
+}
+
+/* Checkbox */
+.alternative-row input[type="checkbox"] {
+  flex: 0 0 10%; /* 10% da largura para o checkbox */
+  margin: 0; /* Remove margens desnecessárias */
+  cursor: pointer; /* Adiciona um cursor de ponteiro */
+}
+
+/* Input de texto */
+.alternative-row input[type="text"] {
+  flex: 1; /* 90% da largura para o input */
+  padding: 8px; /* Adiciona espaçamento interno */
+  border: 1px solid #ccc; /* Borda padrão */
+  border-radius: 4px; /* Cantos arredondados */
+  font-size: 1rem; /* Ajusta o tamanho da fonte */
+  box-sizing: border-box; /* Inclui padding e borda no cálculo do tamanho */
+}
+
+
+
 /* Compartilhar linke */
 #shareLink {
   width: 100%;
@@ -223,14 +251,15 @@ button:hover {
   background-color: #005bb5;
 }
 
+
 .answers {
   display: flex;
   flex-direction: column; /* Alinha itens verticalmente */
   gap: 10px; /* Espaçamento entre as alternativas */
 }
 
-.answers input[type="radio"] {
-  margin-right: 10px; /* Espaço entre o botão e o texto */
+.answers input[type="checkbox"] {
+  margin-right: 10px;
 }
 
 .answers label {
@@ -242,6 +271,7 @@ button:hover {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 
 .answers label:hover {
   background-color: #f9f9f9;

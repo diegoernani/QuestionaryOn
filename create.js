@@ -19,15 +19,21 @@ document.getElementById("addQuestion").addEventListener("click", () => {
         <div class="alternatives">
             <label>Alternativas:</label>
             <div id="alternatives${questionCount}">
-                <input type="text" name="alternative${questionCount}[]" required placeholder="Alternativa 1">
-                <input type="text" name="alternative${questionCount}[]" required placeholder="Alternativa 2">
+                <div class="alternative-row">
+                    <input type="checkbox" name="correctAlternative${questionCount}[]" value="1" class="checkbox">
+                    <input type="text" name="alternative${questionCount}[]" required placeholder="Alternativa 1" class="input">
+                </div>
+                <div class="alternative-row">
+                    <input type="checkbox" name="correctAlternative${questionCount}[]" value="2" class="checkbox">
+                    <input type="text" name="alternative${questionCount}[]" required placeholder="Alternativa 2" class="input">
+                </div>
             </div>
             <button type="button" onclick="addAlternative(${questionCount})">Adicionar Alternativa</button>
         </div>
-                
+
         <div class="material-input-container">
-        <label for="example${questionCount}" class="material-label">Exemplos (opcional):</label>
-        <textarea id="example${questionCount}" name="examples[]" class="material-textarea" placeholder="Add exemplos ou código fonte aqui"></textarea>
+            <label for="example${questionCount}" class="material-label">Exemplos (opcional):</label>
+            <textarea id="example${questionCount}" name="examples[]" class="material-textarea" placeholder="Adicione exemplos ou código fonte aqui"></textarea>
         </div>
     `;
 
@@ -37,15 +43,29 @@ document.getElementById("addQuestion").addEventListener("click", () => {
 // Adicionar alternativa dinâmica
 function addAlternative(questionId) {
     const alternativesContainer = document.getElementById(`alternatives${questionId}`);
+    const alternativeCount = alternativesContainer.children.length + 1;
+
+    const alternativeBlock = document.createElement("div");
+    alternativeBlock.className = "alternative-row"; // Classe para estilização no CSS
+
+    const correctCheckbox = document.createElement("input");
+    correctCheckbox.type = "checkbox";
+    correctCheckbox.name = `correctAlternative${questionId}[]`;
+    correctCheckbox.value = alternativeCount;
+    correctCheckbox.className = "checkbox"; // Classe para estilização no CSS
+
     const newAlternative = document.createElement("input");
     newAlternative.type = "text";
     newAlternative.name = `alternative${questionId}[]`;
     newAlternative.required = true;
-    newAlternative.placeholder = `Alternativa ${alternativesContainer.children.length + 1}`;
-    alternativesContainer.appendChild(newAlternative);
-}
+    newAlternative.placeholder = `Alternativa ${alternativeCount}`;
+    newAlternative.className = "input"; // Classe para estilização no CSS
 
-// Salvar questionário no Supabase
+    alternativeBlock.appendChild(correctCheckbox);
+    alternativeBlock.appendChild(newAlternative);
+
+    alternativesContainer.appendChild(alternativeBlock);
+}
 
 // Salvar questionário no Supabase
 document.getElementById("questionnaireForm").addEventListener("submit", async (e) => {
@@ -111,13 +131,13 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
 
                 // Capturar alternativas associadas
                 const alternativeInputs = document.querySelectorAll(`input[name="alternative${index + 1}[]"]`);
-                
-                alternativeInputs.forEach((altInput) => {
+                const correctCheckboxes = document.querySelectorAll(`input[name="correctAlternative${index + 1}[]"]:checked`);
+
+                alternativeInputs.forEach((altInput, altIndex) => {
                     alternativas.push({
                         texto: altInput.value,
                         questao_id: null,
-                        // correta: correctAlternative && correctAlternative.value == altIndex,
-                        correta: true,
+                        correta: Array.from(correctCheckboxes).some(cb => parseInt(cb.value) === altIndex + 1),
                     });
                 });
 
@@ -161,7 +181,6 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
         console.log("Perguntas salvas com sucesso:", createdQuestions);
 
         // Associar alternativas e exemplos às perguntas salvas
-        // Associar alternativas e exemplos às perguntas salvas
         createdQuestions.forEach((pergunta, index) => {
             const start = index * alternativas.length / createdQuestions.length;
             const end = (index + 1) * alternativas.length / createdQuestions.length;
@@ -176,7 +195,6 @@ document.getElementById("questionnaireForm").addEventListener("submit", async (e
                 }
             });
         });
-
 
         console.log("Alternativas associadas às perguntas:", alternativas);
         console.log("Exemplos associados às perguntas:", exemplos);
